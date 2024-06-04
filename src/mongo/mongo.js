@@ -1,6 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 const uri =
-  "mongodb+srv://youssuf:Sambasong123654@learnmongo.appkrrx.mongodb.net/?retryWrites=true&w=majority&appName=LearnMongo";
+  "mongodb+srv://youssuf:Sambasong123654@learnnode.kuuvs.mongodb.net/?retryWrites=true&w=majority&appName=LearnNode";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -11,7 +11,7 @@ const client = new MongoClient(uri, {
   },
 });
 
-async function run() {
+export default async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
@@ -25,4 +25,3 @@ async function run() {
     await client.close();
   }
 }
-run().catch(console.dir);
