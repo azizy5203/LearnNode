@@ -1,4 +1,12 @@
 function errorHandler(err, req, res, next) {
-  res.status(err.status).json({ msg: err.message });
+  const errResponse = err.message
+    .replace("ValidationError: ", "")
+    .split(", ")
+    .reduce((acc, pair) => {
+      const [key, value] = pair.split(": ");
+      acc[key.trim()] = value.trim();
+      return acc;
+    }, {});
+  res.status(err.status).json(errResponse);
 }
 export default errorHandler;

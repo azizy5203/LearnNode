@@ -1,6 +1,8 @@
 import express from "express";
 import { faker } from "@faker-js/faker";
 
+import User from "../models/UserModel.js";
+
 const router = express.Router();
 
 const usersList = Array.from({ length: 10 }, () => {
@@ -27,25 +29,34 @@ router.get("/GetOne/:id", (req, res, next) => {
   res.status(200).json(user);
 });
 
-router.post("/Add", (req, res, next) => {
+router.post("/Add", async (req, res, next) => {
   const userBody = req.body;
   const isDuplicate = usersList.some((user) => user.name == userBody.name);
 
-  if (!userBody.name || !userBody.email || !userBody.phone) {
-    const error = new Error("Invalid Data");
-    error.status = 400;
-    return next(error);
+  try {
+    const user = await User.create(req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    const err = new Error(error);
+    err.status = 400;
+    return next(err);
   }
 
-  if (isDuplicate) {
-    const error = new Error("Duplication Error => name");
-    error.status = 400;
-    return next(error);
-  }
+  // if (!userBody.name || !userBody.email || !userBody.phone) {
+  //   const error = new Error("Invalid Data");
+  //   error.status = 400;
+  //   return next(error);
+  // }
 
-  const newUser = { id: faker.string.nanoid(7), ...userBody };
-  usersList.push(newUser);
-  res.status(201).json(newUser);
+  // if (isDuplicate) {
+  //   const error = new Error("Duplication Error => name");
+  //   error.status = 400;
+  //   return next(error);
+  // }
+
+  // const newUser = { id: faker.string.nanoid(7), ...userBody };
+  // usersList.push(newUser);
+  // res.status(201).json(newUser);
 });
 
 router.put("/update", (req, res, next) => {
