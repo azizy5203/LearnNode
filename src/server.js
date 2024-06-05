@@ -2,12 +2,11 @@ import express from "express";
 import errors from "./middleware/errors.js";
 import logger from "./middleware/logger.js";
 import users from "./router/users.js";
-import mongoose from "mongoose";
 import colors from "colors";
 
-// import morgan from "morgan";
+import connect from "./mongo/mongo.js";
 
-import run from "./mongo/mongo.js";
+// import morgan from "morgan";
 
 const port = process.env.PORT;
 
@@ -28,14 +27,10 @@ app.use((req, res, next) => {
 
 app.use(errors);
 
-const mongoConnectionUri = process.env.Mongo_URI;
-mongoose
-  .connect(mongoConnectionUri)
+connect()
   .then(() => {
-    console.log("[ MONGOOOSE ]: connected"["blue"]);
     app.listen(port, async () => {
       console.log(`Server is running on port ${port}`);
-      // await run();
     });
   })
-  .catch((err) => console.err(err));
+  .catch((err) => console.log(err));

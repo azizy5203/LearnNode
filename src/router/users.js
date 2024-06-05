@@ -1,7 +1,7 @@
 import express from "express";
 import { faker } from "@faker-js/faker";
 
-import User from "../models/UserModel.js";
+import { createUser } from "../controllers/Users.js";
 
 const router = express.Router();
 
@@ -31,10 +31,10 @@ router.get("/GetOne/:id", (req, res, next) => {
 
 router.post("/Add", async (req, res, next) => {
   const userBody = req.body;
-  const isDuplicate = usersList.some((user) => user.name == userBody.name);
+  // const isDuplicate =
 
   try {
-    const user = await User.create(req.body);
+    const user = await createUser(req.body);
     res.status(200).json(user);
   } catch (error) {
     const err = new Error(error);
