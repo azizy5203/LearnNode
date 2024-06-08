@@ -9,7 +9,7 @@ import connect from "./mongo/mongo.js";
 
 // import morgan from "morgan";
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5555;
 
 const app = express();
 
