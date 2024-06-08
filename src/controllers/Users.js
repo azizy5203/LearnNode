@@ -61,13 +61,6 @@ async function deleteUser(req, res, next) {
     err.status = 400;
     return next(err);
   }
-  try {
-    const deletedUser = await User.findByIdAndDelete(id);
-    return deletedUser;
-  } catch (error) {
-    console.log("🚀 ~ deleteUser ~ error:", error);
-    return error;
-  }
 }
 
 export { createUser, getAllUsers, getOneUser, deleteUser, updateUser };
