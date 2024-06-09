@@ -1,5 +1,5 @@
 import express from "express";
-import errors from "./middleware/errors.js";
+// import errors from "./middleware/errors.js";
 import logger from "./middleware/logger.js";
 import users from "./router/users.js";
 import cors from "cors";
@@ -9,7 +9,7 @@ import connect from "./mongo/mongo.js";
 
 // import morgan from "morgan";
 
-const port = process.env.PORT || 5555;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -30,14 +30,9 @@ app.use(logger);
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users", users);
+app.get("/api/hello", (req, res) => res.status(200).send("Express server"));
 
-app.use((req, res, next) => {
-  const err = new Error("not found");
-  err.status = 404;
-  next(err);
-});
-
-app.use(errors);
+// app.use(errors);
 
 connect()
   .then(() => {

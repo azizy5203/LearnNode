@@ -45,3 +45,4 @@ bower_components/
 
 # TypeScript cache
 *.tsbuildinfo
+.vercel
