@@ -30,7 +30,13 @@ app.use(logger);
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users", users);
-app.get("/api/hello", (req, res) => res.status(200).send("Express server"));
+app.get("/", (req, res) =>
+  res
+    .status(200)
+    .send(
+      "routes are : /api/users/GetAll , /GetOne/id , /Add , /Delete/id , /Update"
+    )
+);
 
 // app.use(errors);
 
