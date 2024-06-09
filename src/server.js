@@ -36,8 +36,9 @@ app.get("/api/hello", (req, res) => res.status(200).send("Express server"));
 
 connect()
   .then(() => {
-    app.listen(port, async () => {
-      console.log(`Server is running on port ${port}`);
-    });
+    console.log("[MONGO] Connected");
   })
   .catch((err) => console.log(err));
+app.listen(port, async () => {
+  console.log(`Server is running on port ${port}`);
+});
