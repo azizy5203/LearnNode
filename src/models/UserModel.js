@@ -1,23 +1,32 @@
 import mongoose from "mongoose";
 
-const UserSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "YOU MUST ENTER A NAME"],
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "YOU MUST ENTER A NAME"],
+      unique: true,
+    },
+    username: {
+      type: String,
+      required: [true, "YOU MUST ENTER A USERNAME"],
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: [true, "YOU MUST ENTER An EMAIL"],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, "YOU MUST ENTER An EMAIL"],
+    },
+    phone: {
+      type: String,
+    },
   },
-  username: {
-    type: String,
-    required: [true, "YOU MUST ENTER A USERNAME"],
-  },
-  email: {
-    type: String,
-    required: [true, "YOU MUST ENTER An EMAIL"],
-  },
-  phone: {
-    type: String,
-    required: [true, "YOU MUST ENTER A PHONE NUMBER"],
-  },
-});
+  { timestamps: true }
+);
 
 const User = mongoose.model("user", UserSchema);
 

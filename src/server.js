@@ -2,6 +2,7 @@ import express from "express";
 // import errors from "./middleware/errors.js";
 import logger from "./middleware/logger.js";
 import users from "./router/users.js";
+import auth from "./router/auth.js";
 import cors from "cors";
 import connect from "./mongo/mongo.js";
 
@@ -30,6 +31,7 @@ app.use(logger);
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users", users);
+app.use("/api/auth", auth);
 app.get("/", (req, res) =>
   res
     .status(200)
