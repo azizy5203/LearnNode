@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "node --env-file=.env src/server.js",
-    "build": "node --env-file=.env src/server.js",
     "dev": "node --watch --env-file=.env src/server.js"
   },
   "keywords": [],

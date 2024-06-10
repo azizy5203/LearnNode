@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/users/GetAll", "destination": "/api/users/GetAll" },
-    { "source": "/users/Add", "destination": "/api/users/Add" },
-    { "source": "/GetOne/:id", "destination": "/api/users/GetOne/:id" },
-    { "source": "/update", "destination": "/api/users/update" },
-    { "source": "/delete/:id", "destination": "/api/users/delete/:id" }
+  "builds": [
+    {
+      "src": "src/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/src/server.js" },
+    { "src": "/(.*)", "dest": "/src/server.js" }
   ]
 }
