@@ -7,10 +7,10 @@ async function register(req, res, next) {
   try {
     const user = req.body;
     const hashedPass = await bcrypt.hash(user.password, 10);
-    const newUser = User.create({ ...user, password: hashedPass });
+    const newUser = await User.create({ ...user, password: hashedPass });
     res.status(201).json(newUser);
   } catch (error) {
-    const err = new Error(err);
+    const err = new Error(error);
     err.status = 400;
     return next(err);
   }
