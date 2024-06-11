@@ -16,4 +16,41 @@ async function register(req, res, next) {
   }
 }
 
-export { register };
+async function login(req, res, next) {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ error: "Username and password are required" });
+    }
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(400).json({ err: "Invalid email or password" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ err: "Invalid email or password" });
+    }
+
+    const token = jwt.sign(user.toJSON(), "231", { expiresIn: "4d" });
+
+    const filteredEntries = Object.entries(user._doc).filter(
+      ([key]) => !["createdAt", "updatedAt", "password"].includes(key)
+    );
+    const filteredObj = Object.fromEntries(filteredEntries);
+
+    res.status(200).json({ user: filteredObj, token });
+  } catch (error) {
+    console.error("🚀 ~ login ~ error:", error);
+    const err = new Error(error);
+    err.status = 500;
+    return next(err);
+  }
+}
+export { register, login };
