@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "YOU MUST ENTER An EMAIL"],
+      required: [true, "YOU MUST ENTER A Phone Number"],
     },
     phone: {
       type: String,
