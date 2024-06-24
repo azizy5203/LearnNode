@@ -1,4 +1,5 @@
 import Task from "../models/TaskModel.js";
+import User from "../models/UserModel.js";
 
 async function getAllTasks(req, res, next) {
   try {
@@ -13,11 +14,15 @@ async function getAllTasks(req, res, next) {
 }
 async function createTask(req, res, next) {
   try {
-    const userBody = req.body;
-    const createdUser = await Task.create(userBody);
-    res.status(200).json(createdUser);
+    const taskBody = req.body;
+    const createdTask = await Task.create(taskBody);
+    const assigneeId = req.body.assignee;
+    await User.findByIdAndUpdate(assigneeId, {
+      $push: { tasks: createdTask },
+    });
+    res.status(200).json(createdTask);
   } catch (error) {
-    console.log("🚀 ~ createUser ~ error:", error);
+    console.log("🚀 ~ createTask ~ error:", error);
     const err = new Error(error);
     err.status = 400;
     return next(err);
@@ -26,11 +31,11 @@ async function createTask(req, res, next) {
 
 async function getOneTask(req, res, next) {
   try {
-    const userId = req.params.id;
-    const user = await Task.findById(userId);
-    res.status(200).json(user);
+    const taskId = req.params.id;
+    const task = await Task.findById(taskId);
+    res.status(200).json(task);
   } catch (error) {
-    console.log("🚀 ~ getOneUser ~ error:", error);
+    console.log("🚀 ~ getOneTask ~ error:", error);
     const err = new Error(error);
     err.status = 400;
     return next(err);
@@ -39,11 +44,11 @@ async function getOneTask(req, res, next) {
 
 async function updateTask(req, res, next) {
   try {
-    const user = req.body;
-    const upadetedUser = await Task.findByIdAndUpdate(user._id, user);
-    res.status(200).json(upadetedUser);
+    const task = req.body;
+    const upadetedTask = await Task.findByIdAndUpdate(task._id, task);
+    res.status(200).json(upadetedTask);
   } catch (error) {
-    console.log("🚀 ~ updateUser ~ error:", error);
+    console.log("🚀 ~ updateTask ~ error:", error);
     const err = new Error(error);
     err.status = 400;
     return next(err);
@@ -52,11 +57,11 @@ async function updateTask(req, res, next) {
 
 async function deleteTask(req, res, next) {
   try {
-    const userId = req.params.id;
-    const deletedUser = await Task.findByIdAndDelete(userId);
-    res.status(200).json(deletedUser);
+    const taskId = req.params.id;
+    const deletedTask = await Task.findByIdAndDelete(taskId);
+    res.status(200).json(deletedTask);
   } catch (error) {
-    console.log("🚀 ~ deleteUser ~ error:", error);
+    console.log("🚀 ~ deleteTask ~ error:", error);
     const err = new Error(error);
     err.status = 400;
     return next(err);

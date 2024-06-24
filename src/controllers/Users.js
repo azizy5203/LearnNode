@@ -43,7 +43,7 @@ async function createUser(req, res, next) {
 async function getOneUser(req, res, next) {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("tasks");
     res.status(200).json(user);
   } catch (error) {
     console.log("🚀 ~ getOneUser ~ error:", error);
