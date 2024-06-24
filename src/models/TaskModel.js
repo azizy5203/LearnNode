@@ -10,6 +10,7 @@ const TaskSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
+      enum: ["New", "Pending", "Hold", "Completed"],
     },
     description: {
       type: String,

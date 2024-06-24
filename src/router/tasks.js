@@ -6,6 +6,7 @@ import {
   getOneTask,
   updateTask,
   deleteTask,
+  getStatusList,
 } from "../controllers/Tasks.js";
 
 const router = express.Router();
@@ -19,4 +20,7 @@ router.get("/GetOne/:id", getOneTask);
 router.put("/update", updateTask);
 
 router.delete("/delete/:id", deleteTask);
+
+router.get("/GetStatusList", getStatusList);
+
 export default router;

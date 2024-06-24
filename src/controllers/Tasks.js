@@ -1,5 +1,6 @@
 import Task from "../models/TaskModel.js";
 import User from "../models/UserModel.js";
+import taskStatusEnum from "../enums/TaskStatus.js";
 
 async function getAllTasks(req, res, next) {
   try {
@@ -67,5 +68,22 @@ async function deleteTask(req, res, next) {
     return next(err);
   }
 }
+async function getStatusList(req, res, next) {
+  try {
+    res.status(200).json(taskStatusEnum);
+  } catch (error) {
+    console.log("🚀 ~ deleteTask ~ error:", error);
+    const err = new Error(error);
+    err.status = 400;
+    return next(err);
+  }
+}
 
-export { createTask, getAllTasks, getOneTask, deleteTask, updateTask };
+export {
+  createTask,
+  getAllTasks,
+  getOneTask,
+  deleteTask,
+  updateTask,
+  getStatusList,
+};
