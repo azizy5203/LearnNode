@@ -1,9 +1,10 @@
 import express from "express";
+import cors from "cors";
 // import errors from "./middleware/errors.js";
+import auth from "./router/auth.js";
 import logger from "./middleware/logger.js";
 import users from "./router/users.js";
-import auth from "./router/auth.js";
-import cors from "cors";
+import tasks from "./router/tasks.js";
 import connect from "./mongo/mongo.js";
 
 // import { normalize } from "./utils/ResponseAdapter.js";
@@ -30,8 +31,9 @@ app.use(logger);
 // app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/users", users);
+app.use("/api/tasks", tasks);
 app.get("/", (req, res) =>
   res
     .status(200)

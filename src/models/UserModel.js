@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema(
     phone: {
       type: String,
     },
+    tasks: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "task",
+      required: false,
+    },
   },
   { timestamps: true }
 );

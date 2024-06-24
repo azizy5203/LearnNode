@@ -1,20 +1,20 @@
-import User from "../models/UserModel.js";
+import Task from "../models/TaskModel.js";
 
-async function getAllUsers(req, res, next) {
+async function getAllTasks(req, res, next) {
   try {
-    const allUsers = await User.find({}).populate("tasks");
-    res.status(200).json(allUsers);
+    const getAllTasks = await Task.find({}).populate("assignee");
+    res.status(200).json(getAllTasks);
   } catch (error) {
-    console.log("🚀 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ getAllTasks ~ error:", error);
     const err = new Error(error);
     err.status = 500;
     return next(err);
   }
 }
-async function createUser(req, res, next) {
+async function createTask(req, res, next) {
   try {
     const userBody = req.body;
-    const createdUser = await User.create(userBody);
+    const createdUser = await Task.create(userBody);
     res.status(200).json(createdUser);
   } catch (error) {
     console.log("🚀 ~ createUser ~ error:", error);
@@ -24,10 +24,10 @@ async function createUser(req, res, next) {
   }
 }
 
-async function getOneUser(req, res, next) {
+async function getOneTask(req, res, next) {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId);
+    const user = await Task.findById(userId);
     res.status(200).json(user);
   } catch (error) {
     console.log("🚀 ~ getOneUser ~ error:", error);
@@ -37,10 +37,10 @@ async function getOneUser(req, res, next) {
   }
 }
 
-async function updateUser(req, res, next) {
+async function updateTask(req, res, next) {
   try {
     const user = req.body;
-    const upadetedUser = await User.findByIdAndUpdate(user._id, user);
+    const upadetedUser = await Task.findByIdAndUpdate(user._id, user);
     res.status(200).json(upadetedUser);
   } catch (error) {
     console.log("🚀 ~ updateUser ~ error:", error);
@@ -50,10 +50,10 @@ async function updateUser(req, res, next) {
   }
 }
 
-async function deleteUser(req, res, next) {
+async function deleteTask(req, res, next) {
   try {
     const userId = req.params.id;
-    const deletedUser = await User.findByIdAndDelete(userId);
+    const deletedUser = await Task.findByIdAndDelete(userId);
     res.status(200).json(deletedUser);
   } catch (error) {
     console.log("🚀 ~ deleteUser ~ error:", error);
@@ -63,4 +63,4 @@ async function deleteUser(req, res, next) {
   }
 }
 
-export { createUser, getAllUsers, getOneUser, deleteUser, updateUser };
+export { createTask, getAllTasks, getOneTask, deleteTask, updateTask };
