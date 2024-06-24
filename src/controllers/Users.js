@@ -11,6 +11,22 @@ async function getAllUsers(req, res, next) {
     return next(err);
   }
 }
+async function getUsersLookup(req, res, next) {
+  try {
+    const allUsers = await User.find({});
+    res.status(200).json(
+      allUsers.map((user) => ({
+        name: user.name,
+        id: user._id,
+      }))
+    );
+  } catch (error) {
+    console.log("🚀 ~ getAllUsers ~ error:", error);
+    const err = new Error(error);
+    err.status = 500;
+    return next(err);
+  }
+}
 async function createUser(req, res, next) {
   try {
     const userBody = req.body;
@@ -63,4 +79,11 @@ async function deleteUser(req, res, next) {
   }
 }
 
-export { createUser, getAllUsers, getOneUser, deleteUser, updateUser };
+export {
+  createUser,
+  getAllUsers,
+  getUsersLookup,
+  getOneUser,
+  deleteUser,
+  updateUser,
+};
