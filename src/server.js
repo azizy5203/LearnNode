@@ -3,6 +3,7 @@ import cors from "cors";
 // import errors from "./middleware/errors.js";
 import auth from "./router/auth.js";
 import logger from "./middleware/logger.js";
+import transform from "./middleware/ResponseTransformer.js";
 import users from "./router/users.js";
 import tasks from "./router/tasks.js";
 import connect from "./mongo/mongo.js";
@@ -27,6 +28,7 @@ app.use(cors());
 // };
 
 app.use(logger);
+app.use(transform);
 // app.use(normalize);
 // app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: false }));
