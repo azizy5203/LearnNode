@@ -3,12 +3,14 @@ export default function transformResponse(req, res, next) {
 
   res.send = function (data) {
     const parsedData = JSON.parse(data);
-    if (parsedData._id) {
-      const transformedData = transform(parsedData);
-      originalSend.call(this, JSON.stringify(transformedData));
-    } else {
-      const transformedData = parsedData.map((item) => transform(item));
-      originalSend.call(this, JSON.stringify(transformedData));
+    if (!req.url.startsWith("/api/auth")) {
+      if (parsedData._id) {
+        const transformedData = transform(parsedData);
+        originalSend.call(this, JSON.stringify(transformedData));
+      } else {
+        const transformedData = parsedData.map((item) => transform(item));
+        originalSend.call(this, JSON.stringify(transformedData));
+      }
     }
   };
   next();
