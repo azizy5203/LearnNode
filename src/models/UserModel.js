@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema(
       ref: "task",
       required: false,
     },
+    IsAdmin: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

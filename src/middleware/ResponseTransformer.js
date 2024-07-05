@@ -8,7 +8,7 @@ export default function transformResponse(req, res, next) {
         const transformedData = transform(parsedData);
         originalSend.call(this, JSON.stringify(transformedData));
       } else {
-        const transformedData = parsedData.map((item) => transform(item));
+        const transformedData = parsedData?.map((item) => transform(item));
         originalSend.call(this, JSON.stringify(transformedData));
       }
     }

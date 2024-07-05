@@ -7,6 +7,7 @@ import transform from "./middleware/ResponseTransformer.js";
 import users from "./router/users.js";
 import tasks from "./router/tasks.js";
 import connect from "./mongo/mongo.js";
+import { isAdmin } from "./middleware/Auth.js";
 
 // import { normalize } from "./utils/ResponseAdapter.js";
 
@@ -28,14 +29,14 @@ app.use(cors());
 // };
 
 app.use(logger);
-app.use(transform);
+// app.use(transform);
 // app.use(normalize);
 // app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/auth", auth);
-app.use("/api/users", users);
-app.use("/api/tasks", tasks);
+app.use("/api/users", isAdmin, users);
+app.use("/api/tasks", isAdmin, tasks);
 app.get("/", (req, res) =>
   res
     .status(200)
