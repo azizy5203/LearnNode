@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import taskStatus from "../enums/TaskStatus.js";
 const TaskSchema = new mongoose.Schema(
   {
     name: {
@@ -10,7 +10,7 @@ const TaskSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["New", "Pending", "Hold", "Completed"],
+      enum: taskStatus.map((status) => status.value),
     },
     description: {
       type: String,
