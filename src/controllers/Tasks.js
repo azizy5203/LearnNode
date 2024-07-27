@@ -4,7 +4,10 @@ import taskStatusEnum from "../enums/TaskStatus.js";
 
 async function getAllTasks(req, res, next) {
   try {
-    const getAllTasks = await Task.find({}).populate("assignee");
+    const getAllTasks = await Task.find({}).populate({
+      path: "assignee",
+      select: "-password -tasks",
+    });
     res.status(200).json(getAllTasks);
   } catch (error) {
     console.log("🚀 ~ getAllTasks ~ error:", error);
