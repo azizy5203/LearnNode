@@ -8,6 +8,8 @@ import users from "./router/users.js";
 import tasks from "./router/tasks.js";
 import connect from "./mongo/mongo.js";
 import { isAdmin } from "./middleware/Auth.js";
+import specs from "./vendors/swagger-ui.js";
+import swaggerUi from "swagger-ui-express";
 
 // import { normalize } from "./utils/ResponseAdapter.js";
 
@@ -46,6 +48,8 @@ app.get("/", (req, res) =>
 );
 
 // app.use(errors);
+
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
 
 connect()
   .then(() => {
